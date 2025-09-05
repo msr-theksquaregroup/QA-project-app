@@ -8,9 +8,9 @@ interface AppStore {
   togglePath: (path: string) => void;
   clearPaths: () => void;
   
-  // Notebook version state
-  useNotebook: 18 | 24;
-  setUseNotebook: (version: 18 | 24) => void;
+  // Agent workflow mode (always ALL agents)
+  agentMode: 'all';
+  setAgentMode: (mode: 'all') => void;
   
   // Last run ID state
   lastRunId?: string;
@@ -39,10 +39,10 @@ export const useAppStore = create<AppStore>((set) => ({
   
   clearPaths: () => set({ selectedPaths: [] }),
   
-  // Notebook version initial state and actions
-  useNotebook: 24,
+  // Agent workflow mode initial state and actions
+  agentMode: 'all',
   
-  setUseNotebook: (version: 18 | 24) => set({ useNotebook: version }),
+  setAgentMode: (mode: 'all') => set({ agentMode: mode }),
   
   // Last run ID initial state and actions
   lastRunId: undefined,

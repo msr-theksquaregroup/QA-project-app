@@ -1,0 +1,136 @@
+{
+  "metadata": {
+    "filename": "checkContact.cy 1.js",
+    "normalized_filename": "checkContact_cy_1_js",
+    "generated_at": "2025-09-05T02:32:35.595777",
+    "framework_version": "3.0.0-FIXED-UNIVERSAL",
+    "processing_status": "completed",
+    "all_content_generated": true
+  },
+  "analysis_summary": {
+    "filename": "checkContact.cy 1.js",
+    "normalized_filename": "checkContact_cy_1_js",
+    "language_detected": "javascript",
+    "frameworks_detected": [
+      "cypress",
+      "jest"
+    ],
+    "real_urls": [
+      "https://www.udaykumar.tech/"
+    ],
+    "primary_url": "https://www.udaykumar.tech/",
+    "parsed_steps": [
+      {
+        "type": "navigation",
+        "action": "cy.visit",
+        "url": "https://www.udaykumar.tech/",
+        "line_number": 3,
+        "original_code": "cy.visit(\"https://www.udaykumar.tech/\")"
+      },
+      {
+        "type": "assert_url",
+        "action": "should",
+        "selector": "url",
+        "assertion_type": "eq",
+        "expected_value": "https://www.udaykumar.tech/",
+        "line_number": 4,
+        "original_code": "cy.url().should('eq', 'https://www.udaykumar.tech/')"
+      },
+      {
+        "type": "input",
+        "action": "type",
+        "selector": "input#name",
+        "value": "Uday Kumar",
+        "line_number": 5,
+        "original_code": "cy.get('input#name').type('Uday Kumar').should('have.value', 'Uday Kumar')"
+      },
+      {
+        "type": "assert_value",
+        "action": "should",
+        "selector": "input#name",
+        "assertion_type": "have.value",
+        "expected_value": "Uday Kumar",
+        "line_number": 5,
+        "original_code": "cy.get('input#name').type('Uday Kumar').should('have.value', 'Uday Kumar')"
+      },
+      {
+        "type": "input",
+        "action": "type",
+        "selector": "#outlined-basic",
+        "value": "7670848696",
+        "line_number": 6,
+        "original_code": "cy.get('#outlined-basic').type(\"7670848696\").should('have.value', '7670848696')"
+      },
+      {
+        "type": "assert_value",
+        "action": "should",
+        "selector": "#outlined-basic",
+        "assertion_type": "have.value",
+        "expected_value": "7670848696",
+        "line_number": 6,
+        "original_code": "cy.get('#outlined-basic').type(\"7670848696\").should('have.value', '7670848696')"
+      },
+      {
+        "type": "input",
+        "action": "type",
+        "selector": "#emailID",
+        "value": "udaykumarvalapudasu@gmail.com",
+        "line_number": 7,
+        "original_code": "cy.get('#emailID').type(\"udaykumarvalapudasu@gmail.com\").should('have.value', 'udaykumarvalapudasu@gmail.com')"
+      },
+      {
+        "type": "assert_value",
+        "action": "should",
+        "selector": "#emailID",
+        "assertion_type": "have.value",
+        "expected_value": "udaykumarvalapudasu@gmail.com",
+        "line_number": 7,
+        "original_code": "cy.get('#emailID').type(\"udaykumarvalapudasu@gmail.com\").should('have.value', 'udaykumarvalapudasu@gmail.com')"
+      }
+    ],
+    "code_length": 469,
+    "lines_count": 8,
+    "complexity_score": 18,
+    "analysis_timestamp": "2025-09-05T02:32:30.086805",
+    "quality_metrics": {
+      "urls_found": 1,
+      "steps_parsed": 8,
+      "frameworks_detected": 2,
+      "has_real_urls": true,
+      "assertion_types": [
+        "assert_url",
+        "assert_value"
+      ]
+    },
+    "agent_version": "3.0.0-FIXED",
+    "subfolder_origin": "analysis",
+    "parsing_engine": "enhanced_fixed_assertions"
+  },
+  "execution_summary": {
+    "status": "warning",
+    "tests_run": 8,
+    "tests_passed": 7,
+    "tests_failed": 1,
+    "execution_time": "4.66s",
+    "execution_mode": "simulated_playwright",
+    "timestamp": "2025-09-05T02:32:34.591404"
+  },
+  "coverage_summary": {
+    "statements_percentage": 95,
+    "branches_percentage": 90,
+    "functions_percentage": 96.8,
+    "lines_percentage": 91.1,
+    "overall_percentage": 93.2,
+    "coverage_collected": true,
+    "source": "simulated_c8_coverage",
+    "timestamp": "2025-09-05T02:32:35.092679"
+  },
+  "artifacts_generated": {
+    "gherkin": "checkContact_cy_1_js.feature",
+    "test_plan": "checkContact_cy_1_js_test_plan.md",
+    "user_story": "checkContact_cy_1_js_user_story.md",
+    "playwright_test": "checkContact_cy_1_js_generated.spec.js",
+    "execution_log": "checkContact_cy_1_js_execution.json"
+  },
+  "errors": []
+}

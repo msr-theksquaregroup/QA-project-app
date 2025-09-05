@@ -1,0 +1,157 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.54cm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{pgfgantt}
+\usepackage{booktabs}
+\usepackage{array}
+
+\title{Test Automation Framework: Development Roadmap}
+\author{Alberto Espinosa \\
+KSquare Group}
+\date{July 21, 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Scope}
+This roadmap outlines the development of an agent-based test automation framework, focusing on a minimum viable product (MVP) that generates synthetic user stories, converts them to Gherkin scenarios, creates and executes test scripts, and reports code coverage. The MVP targets basic functionality to support use cases such as login, payment processing, and user registration. Advanced features, including self-healing tests, CI/CD integration, automated pull request commenting, agentic pull request reviews, and Slack/Teams notifications, are designated for future iterations. The project is executed by a team of three AI developers, each responsible for two agents. Given the limited team size, additional resources may be required to meet the timeline, with potential replanning if support is unavailable.
+
+\section{Roadmap}
+The roadmap spans eight weeks, from Saturday, 21 July 2025, to Friday, 12 September 2025, organized into weekly blocks.
+
+\begin{ganttchart}[
+    x unit=1.5cm,
+    y unit title=0.5cm,
+    y unit chart=0.7cm,
+    vgrid={*{7}{draw=none}, {draw}},
+    hgrid,
+    title height=1,
+    bar height=0.7,
+    bar label font=\small,
+    bar/.append style={fill=blue!50},
+    group right shift=0,
+    group top shift=0.7,
+    group height=.3,
+    group label font=\small,
+    group/.append style={fill=blue!20}
+]{1}{8}
+    \gantttitle{2025}{8} \\
+    \gantttitlelist{1,2,3,4,5,6,7,8}{1} \\
+    \ganttgroup{MVP Development}{1}{3} \\
+    \ganttbar{Agent Development}{1}{3} \ganttnewline
+    \ganttbar{Synthetic Data Integration}{1}{3} \ganttnewline
+    \ganttgroup{Validation}{4}{4} \\
+    \ganttbar{Pipeline Integration}{4}{4} \ganttnewline
+    \ganttlink[link type=f-s]{elem0}{elem2} % Linking Agent Development to Pipeline Integration
+    \ganttgroup{Performance Testing}{5}{5} \\
+    \ganttbar{Stress Testing}{5}{5} \ganttnewline
+    \ganttlink[link type=f-s]{elem2}{elem4} % Linking Pipeline Integration to Stress Testing
+    \ganttgroup{Integration}{6}{6} \\
+    \ganttbar{Test Suite Optimization}{6}{6} \ganttnewline
+    \ganttlink[link type=f-s]{elem4}{elem6} % Linking Stress Testing to Test Suite Optimization
+    \ganttgroup{Post-MVP Enhancements}{7}{8} \\
+    \ganttbar{API Design and Test}{7}{8} \ganttnewline
+    \ganttlink[link type=f-s]{elem6}{elem8} % Linking Test Suite Optimization to API Design and Test
+\end{ganttchart}
+
+\section{Roadmap Stage Descriptions}
+This section elucidates each stage of the roadmap, detailing objectives and expected outputs. The stages guide developers through the sequential development of the agent-based test automation framework, ensuring progression towards a functional MVP within eight weeks. Each stage builds upon the previous, culminating in a system that automates test generation and execution for software testing.
+
+\subsection{MVP Development (Weeks 1--3)}
+\textbf{Objective}: Implement the six agents (Automatic User Histories, Reader, Converter to Gherkin, Generator of Intelligent Tests, Writer, Runner) independently, ensuring each functions correctly in isolation outside the LangGraph environment. This includes generating synthetic user stories to simulate technical requirements.
+
+\textbf{Tasks}:
+\begin{itemize}[label=--]
+    \item \textbf{Agent Development}: Develop standalone logic for each agent using Python and pre-trained Ollama models, focusing on individual functionality for user story generation, parsing, test creation, and execution.
+    \item \textbf{Synthetic Data Integration}: Implement the Automatic User Histories Agent to generate synthetic user stories, ensuring compatibility with downstream agents.
+\end{itemize}
+
+\textbf{Expected Outputs}:
+\begin{itemize}[label=--]
+    \item Functional agents, each producing:
+    \begin{itemize}[label=$\circ$]
+        \item JSON user stories (e.g., \texttt{\{"story": "As a user, I want to log in"\}}).
+        \item Parsed JSON data (e.g., \texttt{\{"functions": [...], "requirements": [...]\}}).
+        \item Gherkin \texttt{.feature} files (e.g., \begin{verbatim}Feature: Login
+Scenario: Valid login\end{verbatim}).
+        \item Test scripts (e.g., \texttt{test\_login.js}: \texttt{test('Valid login', async () => \{...\});}).
+        \item Organized test files in directories (e.g., \texttt{/tests/login.feature}).
+        \item JSON test results and coverage reports (e.g., \texttt{\{"pass": 90, "coverage": "85\%"\}}).
+    \end{itemize}
+\end{itemize}
+
+\subsection{Validation (Week 4)}
+\textbf{Objective}: Integrate all agents into a cohesive LangGraph pipeline, ensuring seamless input-output synchronization across use cases such as login and payment processing.
+
+\textbf{Tasks}:
+\begin{itemize}[label=--]
+    \item \textbf{Pipeline Integration}: Connect the six agents in a LangGraph environment, validating data flow from user story generation to test execution and reporting.
+\end{itemize}
+
+\textbf{Expected Outputs}:
+\begin{itemize}[label=--]
+    \item A fully integrated pipeline producing a sequence of outputs: JSON user stories, parsed data, Gherkin files, test scripts, organized files, and coverage reports, validated for use cases. Formats (e.g., Playwright, Selenium) are flexible if required.
+\end{itemize}
+
+\subsection{Performance Testing (Week 5)}
+\textbf{Objective}: Evaluate the pipeline’s performance and robustness through stress testing across use cases, ensuring reliability under varying conditions.
+
+\textbf{Tasks}:
+\begin{itemize}[label=--]
+    \item \textbf{Stress Testing}: Execute the pipeline on use cases (e.g., login, payment processing), assessing test execution stability and coverage completeness.
+\end{itemize}
+
+\textbf{Expected Outputs}:
+\begin{itemize}[label=--]
+    \item Validated pipeline outputs, including test scripts, JSON test results (e.g., \texttt{\{"pass": 90, "fail": 10\}}), coverage reports (e.g., \texttt{\{"coverage": "85\%"\}}), and visualization plots (e.g., \texttt{coverage.png}).
+\end{itemize}
+
+\subsection{Integration (Week 6)}
+\textbf{Objective}: Optimize the test suite by applying prioritization rules to enhance efficiency and coverage for critical codebase functions.
+
+\textbf{Tasks}:
+\begin{itemize}[label=--]
+    \item \textbf{Test Suite Optimization}: Deploy the Runner Agent to apply prioritization rules (e.g., flagging tests for high-risk functions like payment processing), producing an optimized test suite.
+\end{itemize}
+
+\textbf{Expected Outputs}:
+\begin{itemize}[label=--]
+    \item Optimized test suites with prioritization metadata (e.g., \texttt{\{"test": "login", "priority": "high"\}}) and updated test files in directories.
+\end{itemize}
+
+\subsection{Post-MVP Enhancements (Weeks 7--8)}
+\textbf{Objective}: Finalize the system by developing a RESTful API to deliver test results and coverage reports, enhancing accessibility.
+
+\textbf{Tasks}:
+\begin{itemize}[label=--]
+    \item \textbf{API Design and Test}: Implement the Writer and Runner Agents to produce unified reports and validate a RESTful API for delivering outputs.
+\end{itemize}
+
+\textbf{Expected Outputs}:
+\begin{itemize}[label=--]
+    \item Unified JSON reports (e.g., \texttt{\{"tests": [...], "coverage": "85\%", "summary": "Robust test suite"\}}) and a validated RESTful API for report delivery.
+\end{itemize}
+
+\section{Team Composition}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.2\textwidth}|>{\raggedright\arraybackslash}p{0.3\textwidth}|>{\raggedright\arraybackslash}p{0.2\textwidth}|>{\raggedright\arraybackslash}p{0.3\textwidth}|}
+\hline
+\textbf{Name} & \textbf{Role} & \textbf{Agent} & \textbf{Comments} \\ \hline
+TeamMember1 & AI Developer (Agents) & Automatic User Histories, Reader & Responsible for initial input generation and parsing \\ \hline
+TeamMember2 & AI Developer (Agents) & Converter to Gherkin, Generator of Intelligent Tests & Manages test case creation \\ \hline
+TeamMember3 & AI Developer (Agents) & Writer, Runner & Handles test organization and execution \\ \hline
+\end{tabular}
+\caption{Team Members and Assigned Agents}
+\end{table}
+
+\end{document}

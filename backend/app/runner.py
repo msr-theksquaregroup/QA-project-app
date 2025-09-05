@@ -91,7 +91,7 @@ class RunManager:
                 })
             
             # Run the analysis using run_agents from notebook adapter
-            for event in notebook_adapter.run_agents(paths, run_id):
+            for event in notebook_adapter.run_agents(paths, run_id, use_notebook=use_notebook):
                 # Process the event and update run state
                 self._process_agent_event(run_id, event)
                 

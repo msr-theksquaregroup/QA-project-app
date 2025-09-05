@@ -1,0 +1,117 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.54cm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+
+\title{Test Automation Framework: Agent Architecture Description}
+\author{Alberto Espinosa\\
+KSqure Group}
+\date{July 21, 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Scope}
+This document delineates the agent-based architecture for an automated test generation framework, designed to streamline software testing by converting user stories into executable test cases. The minimum viable product (MVP) focuses on foundational functionality: generating synthetic user stories, parsing inputs, producing Gherkin scenarios, creating and executing test scripts, and reporting code coverage. Advanced features, such as self-healing tests, CI/CD pipeline integration, automated pull request commenting, agentic pull request reviews, and Slack/Teams notifications, are reserved for future iterations. The project is executed by a team of three AI developers, each responsible for two agents. Given the limited team size, additional resources may be required to meet the timeline, with potential replanning if support is unavailable.
+
+\section{Agent Architecture Overview}
+The test automation framework employs a sequential pipeline of six agents, implemented within a LangGraph environment using pre-trained Ollama models. The pipeline transforms project requirements into executable test cases, addressing challenges such as manual testing overhead, inconsistent user story translation, and flaky test detection. The agents operate in sequence: the Automatic User Histories Agent generates synthetic user stories; the Reader Agent parses inputs; the Converter to Gherkin Agent produces Gherkin scenarios; the Generator of Intelligent Tests Agent creates executable test scripts; the Writer Agent organizes test files; and the Runner Agent executes tests and generates coverage reports. The architecture supports use cases such as login, payment processing, and user registration, ensuring scalability and modularity for future enhancements.
+
+\section{Agent Descriptions}
+
+\subsection{Automatic User Histories Agent}
+\textbf{Goal}: Generate synthetic user stories from scratch to facilitate MVP development, simulating technical requirements for testing scenarios until real inputs are available.
+
+\textbf{Inputs}: Python codebase (text files) or project requirements (JSON/text).
+
+\textbf{Outputs}: Synthetic user stories in JSON format, e.g., \texttt{\{"story": "As a user, I want to log in with valid credentials to access my account"\}}. These outputs are preliminary and subject to change.
+
+\textbf{Ollama Configuration}: DeepSeek model, temperature 0.7 for creative story generation, top-p 0.9.
+
+\subsection{Reader (Parser) Agent}
+\textbf{Goal}: Parse user stories and codebase to extract structured data for test generation, ensuring compatibility with downstream agents.
+
+\textbf{Inputs}: Synthetic user stories (JSON/text) and Python codebase (text files).
+
+\textbf{Outputs}: Structured JSON, e.g., \texttt{\{"functions": [\{"name": "login", "params": ["username", "password"]\}], "requirements": ["valid login"]\}}. Preliminary format.
+
+\textbf{Ollama Configuration}: DeepSeek model, temperature 0.3 for deterministic parsing, top-p 0.95.
+
+\subsection{Converter to Gherkin Agent}
+\textbf{Goal}: Transform parsed user stories into Gherkin scenarios for use in behaviour-driven development frameworks like Cucumber.
+
+\textbf{Inputs}: Structured JSON from the Reader Agent.
+
+\textbf{Outputs}: Gherkin \texttt{.feature} files, e.g.,
+
+\begin{verbatim}
+Feature: Login
+Scenario: Valid login
+Given a user with valid credentials
+When they log in
+Then they access their account
+\end{verbatim}
+
+Playwright/Cucumber format is assumed, with flexibility for alternatives (e.g., Selenium) if desired.
+
+\textbf{Ollama Configuration}: Qwen model, temperature 0.5 for balanced creativity, top-p 0.9.
+
+\subsection{Generator of Intelligent Tests Agent}
+\textbf{Goal}: Generate executable test scripts based on Gherkin scenarios, leveraging AI to ensure comprehensive test coverage.
+
+\textbf{Inputs}: Gherkin \texttt{.feature} files from the Converter Agent.
+
+\textbf{Outputs}: Test scripts in Playwright/Cucumber format (e.g., \texttt{test\_login.js}:
+
+\begin{verbatim}
+const { test } = require('@playwright/test');
+test('Valid login', async () => { ... });
+\end{verbatim}
+
+Format is flexible (e.g., Selenium) if required.
+
+\textbf{Ollama Configuration}: DeepSeek model, temperature 0.4 for precise code generation, top-p 0.95.
+
+\subsection{Writer Agent}
+\textbf{Goal}: Organize generated test scripts and Gherkin files into appropriate project directories for execution.
+
+\textbf{Inputs}: Gherkin \texttt{.feature} files and test scripts from the Generator Agent.
+
+\textbf{Outputs}: Organized test files in directories, e.g., \texttt{/tests/login.feature}, \texttt{/tests/test\_login.js}. Directory structure is preliminary.
+
+\textbf{Ollama Configuration}: Qwen model, temperature 0.3 for deterministic file organization, top-p 0.95.
+
+\subsection{Runner Agent}
+\textbf{Goal}: Execute test scripts and generate coverage and test result reports, identifying pass/fail outcomes and untested code.
+
+\textbf{Inputs}: Test files from the Writer Agent.
+
+\textbf{Outputs}: JSON test results and coverage reports, e.g., \texttt{\{"pass": 90, "fail": 10, "coverage": "85\%"\}}, and visualization plots (e.g., \texttt{coverage.png}). Format is preliminary.
+
+\textbf{Ollama Configuration}: DeepSeek model, temperature 0.3 for consistent reporting, top-p 0.95.
+
+\newpage
+\section{Team Composition}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.2\textwidth}|>{\raggedright\arraybackslash}p{0.3\textwidth}|>{\raggedright\arraybackslash}p{0.2\textwidth}|>{\raggedright\arraybackslash}p{0.3\textwidth}|}
+\hline
+\textbf{Name} & \textbf{Role} & \textbf{Agent} & \textbf{Comments} \\ \hline
+TeamMember1 & AI Developer (Agents) & Automatic User Histories, Reader & Responsible for initial input generation and parsing \\ \hline
+TeamMember2 & AI Developer (Agents) & Converter to Gherkin, Generator of Intelligent Tests & Manages test case creation \\ \hline
+TeamMember3 & AI Developer (Agents) & Writer, Runner & Handles test organization and execution \\ \hline
+\end{tabular}
+\caption{Team Members and Assigned Agents}
+\end{table}
+
+\end{document}

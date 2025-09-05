@@ -6,16 +6,20 @@ import { Upload, Link as LinkIcon, X, FileArchive, AlertCircle } from 'lucide-re
 
 interface FileUploaderProps {
   onFileUpload?: (file: File) => void;
+  onFilesUpload?: (files: File[]) => void;
   onUrlUpload?: (url: string) => void;
   className?: string;
   disabled?: boolean;
+  acceptMultiple?: boolean;
 }
 
 export function FileUploader({ 
   onFileUpload, 
+  onFilesUpload,
   onUrlUpload, 
   className, 
-  disabled 
+  disabled,
+  acceptMultiple = false
 }: FileUploaderProps) {
   const [uploadMode, setUploadMode] = useState<'file' | 'url'>('file');
   const [url, setUrl] = useState('');
@@ -26,25 +30,36 @@ export function FileUploader({
     setError(null);
     
     if (rejectedFiles.length > 0) {
-      setError('Please upload a ZIP file');
+      setError(acceptMultiple ? 'Please upload valid code files' : 'Please upload a ZIP file');
       return;
     }
     
-    const file = acceptedFiles[0];
-    if (file) {
-      setUploadedFile(file);
-      onFileUpload?.(file);
+    if (acceptMultiple && acceptedFiles.length > 0) {
+      onFilesUpload?.(acceptedFiles);
+    } else {
+      const file = acceptedFiles[0];
+      if (file) {
+        setUploadedFile(file);
+        onFileUpload?.(file);
+      }
     }
-  }, [onFileUpload]);
+  }, [onFileUpload, onFilesUpload, acceptMultiple]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: {
+    accept: acceptMultiple ? {
+      'text/javascript': ['.js'],
+      'text/typescript': ['.ts'],
+      'text/jsx': ['.jsx'],
+      'text/tsx': ['.tsx'],
+      'text/plain': ['.cy.js', '.spec.js', '.test.js']
+    } : {
       'application/zip': ['.zip'],
       'application/x-zip-compressed': ['.zip'],
     },
-    maxFiles: 1,
+    maxFiles: acceptMultiple ? undefined : 1,
     disabled,
+    multiple: acceptMultiple,
   });
 
   const handleUrlSubmit = (e: React.FormEvent) => {

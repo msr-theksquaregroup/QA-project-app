@@ -5,8 +5,9 @@ import { FileTree } from '@/components/FileTree';
 import { CodePreview } from '@/components/CodePreview';
 import { FileTreeSkeleton, CodePreviewSkeleton } from '@/components/SkeletonLoaders';
 import { useAppStore } from '@/lib/store';
-import { uploadZip, uploadByUrl, listFiles, getFileContent } from '@/lib/api';
+import { uploadZip, uploadByUrl, listFiles, getFileContent, uploadFilesToAgent, analyzeUploadedFiles } from '@/lib/api';
 import { Button } from '@/components/ui/button';
+import AgentExecution from './AgentExecution';
 import { toast } from 'sonner';
 import { 
   RefreshCw, 
@@ -16,7 +17,9 @@ import {
   Folder,
   Upload,
   Archive,
-  Download
+  Download,
+  Play,
+  Bot
 } from 'lucide-react';
 
 
@@ -24,6 +27,9 @@ export default function Files() {
   const queryClient = useQueryClient();
   const { selectedPaths, togglePath, clearPaths } = useAppStore();
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [showAgentExecution, setShowAgentExecution] = useState(false);
+  const [executionFile, setExecutionFile] = useState<{code: string, filename: string} | null>(null);
+  const [uploadMode, setUploadMode] = useState<'legacy' | 'agent'>('agent');
 
   // Fetch file tree
   const { 
@@ -99,6 +105,51 @@ export default function Files() {
     paths.forEach(path => togglePath(path));
   };
 
+  const handleAnalyzeWithAgents = () => {
+    if (!selectedFile || !fileContent) {
+      toast.error('Please select a file to analyze');
+      return;
+    }
+    
+    const filename = selectedFile.split('/').pop() || 'unknown.js';
+    setExecutionFile({ code: fileContent, filename });
+    setShowAgentExecution(true);
+  };
+
+  const handleBackFromExecution = () => {
+    setShowAgentExecution(false);
+    setExecutionFile(null);
+  };
+
+  // Agent file upload handler
+  const handleAgentFilesUpload = async (files: File[]) => {
+    try {
+      toast.info('Uploading files to agent service...', {
+        description: `Processing ${files.length} file(s)`
+      });
+
+      // Upload files to agent service
+      const uploadResult = await uploadFilesToAgent(files);
+      
+      if (uploadResult.status === 'success') {
+        toast.success('Files uploaded successfully!', {
+          description: `${uploadResult.files_uploaded} files ready for analysis`
+        });
+
+        // Automatically start analysis with the first file
+        if (uploadResult.files.length > 0) {
+          const firstFile = uploadResult.files[0];
+          setExecutionFile({ code: firstFile.content, filename: firstFile.name });
+          setShowAgentExecution(true);
+        }
+      }
+    } catch (error: any) {
+      toast.error('Agent upload failed', {
+        description: error.message || 'Failed to upload files to agent service'
+      });
+    }
+  };
+
 
 
   const getLanguageFromPath = (path: string): string => {
@@ -129,6 +180,17 @@ export default function Files() {
   const isUploading = uploadZipMutation.isPending || uploadUrlMutation.isPending;
   const uploadError = uploadZipMutation.error || uploadUrlMutation.error;
 
+  // Show agent execution if triggered
+  if (showAgentExecution && executionFile) {
+    return (
+      <AgentExecution
+        code={executionFile.code}
+        filename={executionFile.filename}
+        onBack={handleBackFromExecution}
+      />
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -142,19 +204,66 @@ export default function Files() {
       <div className="rounded-lg border border-border bg-card p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold">Upload Source Code</h2>
-          {isUploading && (
-            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-foreground" />
-              <span>Uploading...</span>
+          <div className="flex items-center space-x-4">
+            {/* Mode Toggle */}
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setUploadMode('agent')}
+                className={`px-3 py-1 text-sm rounded-md transition-colors ${
+                  uploadMode === 'agent'
+                    ? 'bg-blue-100 text-blue-700 font-medium'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <Bot className="w-4 h-4 inline mr-1" />
+                Agent Mode
+              </button>
+              <button
+                onClick={() => setUploadMode('legacy')}
+                className={`px-3 py-1 text-sm rounded-md transition-colors ${
+                  uploadMode === 'legacy'
+                    ? 'bg-gray-100 text-gray-700 font-medium'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                Legacy Mode
+              </button>
             </div>
-          )}
+            
+            {isUploading && (
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-foreground" />
+                <span>Uploading...</span>
+              </div>
+            )}
+          </div>
         </div>
         
-        <FileUploader
-          onFileUpload={handleFileUpload}
-          onUrlUpload={handleUrlUpload}
-          disabled={isUploading}
-        />
+        {uploadMode === 'agent' ? (
+          <div className="space-y-4">
+            <div className="text-sm text-blue-600 bg-blue-50 p-3 rounded-md">
+              <Bot className="w-4 h-4 inline mr-2" />
+              <strong>Agent Mode:</strong> Upload individual test files (.js, .ts, .cy.js) directly to the AI agents for real-time analysis
+            </div>
+            <FileUploader
+              onFilesUpload={handleAgentFilesUpload}
+              disabled={isUploading}
+              acceptMultiple={true}
+            />
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded-md">
+              <Archive className="w-4 h-4 inline mr-2" />
+              <strong>Legacy Mode:</strong> Upload ZIP files or GitHub repositories for traditional file management
+            </div>
+            <FileUploader
+              onFileUpload={handleFileUpload}
+              onUrlUpload={handleUrlUpload}
+              disabled={isUploading}
+            />
+          </div>
+        )}
         
         {uploadError && (
           <div className="mt-4 flex items-center space-x-2 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
@@ -239,6 +348,8 @@ export default function Files() {
                 root={fileTree}
                 selectedPaths={selectedPaths}
                 onSelectionChange={handleSelectionChange}
+                onFileClick={setSelectedFile}
+                selectedFile={selectedFile}
               />
             </div>
           )}
@@ -259,9 +370,21 @@ export default function Files() {
 
         {/* File Preview */}
         <div className="rounded-lg border border-border bg-card p-6">
-          <div className="flex items-center space-x-2 mb-4">
-            <FileText className="h-5 w-5" />
-            <h2 className="text-xl font-semibold">File Preview</h2>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-2">
+              <FileText className="h-5 w-5" />
+              <h2 className="text-xl font-semibold">File Preview</h2>
+            </div>
+            {selectedFile && fileContent && (
+              <Button
+                onClick={handleAnalyzeWithAgents}
+                className="flex items-center space-x-2"
+                size="sm"
+              >
+                <Bot className="h-4 w-4" />
+                <span>Analyze with Agents</span>
+              </Button>
+            )}
           </div>
           
           {!selectedFile ? (

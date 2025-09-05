@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "filename": "user_login_test.js",
+    "normalized_filename": "user_login_test_js",
+    "generated_at": "2025-09-05T02:30:43.727129",
+    "framework_version": "3.0.0-FIXED-UNIVERSAL",
+    "processing_status": "completed",
+    "all_content_generated": true
+  },
+  "analysis_summary": {
+    "filename": "user_login_test.js",
+    "normalized_filename": "user_login_test_js",
+    "language_detected": "javascript",
+    "frameworks_detected": [
+      "cypress",
+      "jest"
+    ],
+    "real_urls": [
+      "https://app.example.com/login"
+    ],
+    "primary_url": "https://app.example.com/login",
+    "parsed_steps": [
+      {
+        "type": "navigation",
+        "action": "cy.visit",
+        "url": "https://app.example.com/login",
+        "line_number": 1,
+        "original_code": "describe(\"User Login\", () => { it(\"should login with valid credentials\", () => { cy.visit(\"https://app.example.com/login\"); cy.get(\"[data-testid=username]\").type(\"user@example.com\"); cy.get(\"[data-testid=password]\").type(\"password123\"); cy.get(\"[data-testid=login-btn]\").click(); cy.url().should(\"include\", \"/dashboard\"); cy.get(\"[data-testid=welcome-message]\").should(\"be.visible\"); }); });"
+      }
+    ],
+    "code_length": 391,
+    "lines_count": 1,
+    "complexity_score": 1,
+    "analysis_timestamp": "2025-09-05T02:30:38.213806",
+    "quality_metrics": {
+      "urls_found": 1,
+      "steps_parsed": 1,
+      "frameworks_detected": 2,
+      "has_real_urls": true,
+      "assertion_types": []
+    },
+    "agent_version": "3.0.0-FIXED",
+    "subfolder_origin": "demo",
+    "parsing_engine": "enhanced_fixed_assertions"
+  },
+  "execution_summary": {
+    "status": "passed",
+    "tests_run": 1,
+    "tests_passed": 1,
+    "tests_failed": 0,
+    "execution_time": "2.76s",
+    "execution_mode": "simulated_playwright",
+    "timestamp": "2025-09-05T02:30:42.722073"
+  },
+  "coverage_summary": {
+    "statements_percentage": 68.9,
+    "branches_percentage": 65.6,
+    "functions_percentage": 79.4,
+    "lines_percentage": 74.6,
+    "overall_percentage": 72.1,
+    "coverage_collected": true,
+    "source": "simulated_c8_coverage",
+    "timestamp": "2025-09-05T02:30:43.222497"
+  },
+  "artifacts_generated": {
+    "gherkin": "user_login_test_js.feature",
+    "test_plan": "user_login_test_js_test_plan.md",
+    "user_story": "user_login_test_js_user_story.md",
+    "playwright_test": "user_login_test_js_generated.spec.js",
+    "execution_log": "user_login_test_js_execution.json"
+  },
+  "errors": []
+}

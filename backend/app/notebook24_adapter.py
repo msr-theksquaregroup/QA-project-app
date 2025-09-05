@@ -22,7 +22,7 @@ class Notebook24Adapter:
         self.notebook_path = os.getenv("NOTEBOOK24_PATH", "/opt/notebook24")
         self.python_env = os.getenv("NOTEBOOK24_PYTHON", "python3")
     
-    def run_agents(self, paths: List[str], run_id: str) -> Generator[Dict[str, Any], None, None]:
+    def run_agents(self, paths: List[str], run_id: str, use_notebook: int = 24) -> Generator[Dict[str, Any], None, None]:
         """
         Mock implementation of agent execution for QA analysis.
         
@@ -50,6 +50,39 @@ class Notebook24Adapter:
         artifacts_path.mkdir(parents=True, exist_ok=True)
         
         print(f"🚀 Starting QA analysis for {len(paths)} files...")
+
+        # Optionally execute Notebook 24 and save executed notebook as an artifact
+        if use_notebook == 24:
+            yield {
+                "agent": "notebook",
+                "state": "running",
+                "message": "Executing notebook_24.ipynb..."
+            }
+            try:
+                executed_path = self._execute_notebook_24(run_id)
+                # Also write a small summary artifact for visibility in artifacts list
+                from .storage import storage_manager
+                artifacts_summary = (
+                    f"# Notebook 24 Execution\n\n"
+                    f"Executed notebook saved at: `{executed_path}`\n\n"
+                    f"This file summarizes the execution of `notebook_24.ipynb`."
+                )
+                run_path = storage_manager.get_run_path(run_id)
+                summary_file = (run_path / "artifacts" / "notebook.md")
+                with open(summary_file, 'w', encoding='utf-8') as f:
+                    f.write(artifacts_summary)
+                yield {
+                    "agent": "notebook",
+                    "state": "success",
+                    "message": "Notebook 24 executed",
+                    "artifact": f"Executed notebook saved to {executed_path}",
+                }
+            except Exception as e:
+                yield {
+                    "agent": "notebook",
+                    "state": "warn",
+                    "message": f"Notebook 24 execution skipped: {str(e)}",
+                }
         
         # Iterate through 8 agents from AGENTS constant
         for agent_info in AGENTS:
@@ -114,6 +147,41 @@ class Notebook24Adapter:
         }
         
         print(f"✅ QA analysis completed for run {run_id}")
+
+    def _execute_notebook_24(self, run_id: str) -> str:
+        """
+        Execute the notebook_24.ipynb located in the repository's notebook folder
+        and save the executed notebook under the run's artifacts directory.
+        """
+        from .storage import storage_manager
+        import nbformat
+        from nbclient import NotebookClient
+        from pathlib import Path
+
+        # Resolve project root and notebook path
+        project_root = Path(__file__).resolve().parents[2]
+        # Prefer the ALL Agent notebook if present; fallback to notebook_24.ipynb
+        all_agents_path = project_root / "notebook" / "ALL Agent.ipynb"
+        notebook24_path = project_root / "notebook" / "notebook_24.ipynb"
+        notebook_path = all_agents_path if all_agents_path.exists() else notebook24_path
+        if not notebook_path.exists():
+            raise FileNotFoundError(f"Notebook not found at {notebook_path}")
+
+        # Prepare output path
+        run_path = storage_manager.get_run_path(run_id)
+        artifacts_path = run_path / "artifacts"
+        artifacts_path.mkdir(parents=True, exist_ok=True)
+        executed_name = "ALL Agent.executed.ipynb" if notebook_path.name.startswith("ALL Agent") else "notebook_24.executed.ipynb"
+        executed_path = artifacts_path / executed_name
+
+        # Load and execute the notebook
+        nb = nbformat.read(notebook_path, as_version=4)
+        client = NotebookClient(nb, timeout=120, kernel_name="python3", allow_errors=True)
+        client.execute()
+
+        # Save executed notebook
+        nbformat.write(nb, executed_path)
+        return str(executed_path)
     
     def _generate_mock_artifact(self, agent_key: str, agent_label: str, paths: List[str]) -> str:
         """

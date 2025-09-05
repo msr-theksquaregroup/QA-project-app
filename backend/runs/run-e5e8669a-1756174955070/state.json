@@ -1,0 +1,74 @@
+{
+  "runId": "run-e5e8669a-1756174955070",
+  "status": "completed",
+  "agents": [
+    {
+      "key": "code_analysis",
+      "label": "Code Analysis",
+      "state": "success",
+      "message": "Code Analysis completed successfully"
+    },
+    {
+      "key": "user_story",
+      "label": "User Story Generation",
+      "state": "success",
+      "message": "User Story Generation completed successfully"
+    },
+    {
+      "key": "gherkin",
+      "label": "Gherkin Scenarios",
+      "state": "success",
+      "message": "Gherkin Scenarios completed successfully"
+    },
+    {
+      "key": "test_plan",
+      "label": "Test Plan Creation",
+      "state": "success",
+      "message": "Test Plan Creation completed successfully"
+    },
+    {
+      "key": "playwright",
+      "label": "Playwright Test Generation",
+      "state": "success",
+      "message": "Playwright Test Generation completed successfully"
+    },
+    {
+      "key": "execution",
+      "label": "Test Execution",
+      "state": "success",
+      "message": "Test Execution completed successfully"
+    },
+    {
+      "key": "coverage",
+      "label": "Coverage Analysis",
+      "state": "success",
+      "message": "Coverage Analysis completed successfully"
+    },
+    {
+      "key": "final_report",
+      "label": "Final Report",
+      "state": "success",
+      "message": "Final Report completed successfully"
+    }
+  ],
+  "coverage": {
+    "overall_percentage": 87.5,
+    "statements_percentage": 89.2,
+    "functions_percentage": 85.7,
+    "branches_percentage": 84.3,
+    "coverage_collected": true,
+    "source": "simulated"
+  },
+  "files": [],
+  "artifacts": {
+    "code_analysis": "# Code Analysis Report\nGenerated: 2025-08-25 21:22:35 UTC\n\n## Overview\nAnalyzed 2 files in the project.\n\n## File Summary\n- `upload-123/src/main.py`: Source file detected\n- `upload-123/src/utils.py`: Source file detected\n\n\n## Code Metrics\n- Total files analyzed: 2\n- Estimated complexity: Medium\n- Test coverage potential: High\n- Framework detected: React/TypeScript\n\n## Key Findings\n- Well-structured component architecture\n- Good separation of concerns\n- Type safety implemented\n- Modern development practices followed\n\nTODO: Replace with actual static analysis results from notebook\n",
+    "user_story": "# User Story Generation Report\nGenerated: 2025-08-25 21:22:36 UTC\n\n## Generated User Stories\n\n1. **As a user**, I want to upload files so that I can analyze my code quality\n2. **As a developer**, I want to see test results so that I can improve code coverage\n3. **As a QA engineer**, I want to generate test cases so that I can ensure comprehensive testing\n4. **As a stakeholder**, I want to view reports so that I can track project quality metrics\n\n## Story Details\n- Total stories generated: 4\n- Priority: High (3), Medium (1)\n- Acceptance criteria: Defined for all stories\n- Testable: All stories include clear test conditions\n\nTODO: Generate stories from actual code analysis results\n",
+    "gherkin": "# Gherkin Scenarios Report\nGenerated: 2025-08-25 21:22:36 UTC\n\n## Gherkin Scenarios\n\n### Feature: File Upload and Analysis\n\n```gherkin\nFeature: Code Quality Analysis\n  As a user\n  I want to upload and analyze my code\n  So that I can improve code quality\n\n  Scenario: Upload ZIP file\n    Given I am on the files page\n    When I upload a valid ZIP file\n    Then the files should be extracted and displayed\n    \n  Scenario: Select files for analysis  \n    Given I have uploaded source code\n    When I select specific files from the tree\n    Then the files should be marked as selected\n```\n\n## Scenario Summary\n- Total scenarios: 8\n- Features covered: 3\n- Test cases: 24 derived from scenarios\n\nTODO: Generate scenarios from actual user story analysis\n",
+    "test_plan": "# Test Plan Creation Report\nGenerated: 2025-08-25 21:22:37 UTC\n\n## Test Strategy\n- **Unit Tests**: Component and function testing\n- **Integration Tests**: API and service interaction\n- **End-to-End Tests**: Complete user workflows\n- **Performance Tests**: Load and stress testing\n\n## Test Categories\n1. **Functional Tests** - Core feature validation\n2. **UI/UX Tests** - Interface and usability\n3. **API Tests** - Backend endpoint validation\n4. **Security Tests** - Input validation and security\n\n## Coverage Goals\n- Unit Tests: 90%+\n- Integration Tests: 80%+\n- E2E Tests: Critical paths covered\n\nTODO: Generate detailed test plan from scenario analysis\n",
+    "playwright": "# Playwright Test Generation Report\nGenerated: 2025-08-25 21:22:37 UTC\n\n## Generated Playwright Tests\n\n```javascript\nimport { test, expect } from '@playwright/test';\n\ntest.describe('File Upload Flow', () => {\n  test('should upload and display files', async ({ page }) => {\n    await page.goto('/files');\n    \n    const fileInput = page.locator('input[type=\"file\"]');\n    await fileInput.setInputFiles('test-data/sample.zip');\n    \n    await expect(page.locator('text=Upload successful')).toBeVisible();\n  });\n});\n```\n\n## Test Suite Summary\n- Total tests generated: 24\n- Test files: 6\n- Coverage: Upload, Analysis, Reporting flows\n\nTODO: Generate tests from actual test plan and scenarios\n",
+    "execution": "# Test Execution Report\nGenerated: 2025-08-25 21:22:38 UTC\n\n## Test Execution Results\n\n### Summary\n- **Total Tests**: 24\n- **Passed**: 22\n- **Failed**: 1  \n- **Skipped**: 1\n- **Duration**: 45.3s\n\n### Test Suites\n1. **File Upload Tests**: 8/8 passed\n2. **Analysis Workflow**: 9/10 passed (1 timeout)\n3. **Reporting Tests**: 5/6 passed (1 skipped)\n\n### Failures\n- `upload-large-files.spec.ts`: Timeout waiting for upload completion\n\nTODO: Execute actual generated tests and collect real results\n",
+    "coverage": "# Coverage Analysis Report\nGenerated: 2025-08-25 21:22:38 UTC\n\n## Coverage Analysis\n\n### Overall Coverage: 87.5%\n- **Statements**: 89.2% (2,456/2,752)\n- **Functions**: 85.7% (342/399) \n- **Branches**: 84.3% (1,234/1,463)\n- **Lines**: 87.5% (2,108/2,409)\n\n### File Coverage\n- `upload-123/src/main.py`: 85-95% coverage\n- `upload-123/src/utils.py`: 85-95% coverage\n\n### Uncovered Areas\n- Error handling paths (12.5%)\n- Edge case validations (8.2%)\n- Complex branching logic (15.7%)\n\nTODO: Collect actual coverage data from test execution\n",
+    "final_report": "# Final Report Report\nGenerated: 2025-08-25 21:22:39 UTC\n\n## Executive Summary\nQA Analysis completed successfully for 2 files.\n**Overall Quality Score: A- (87.5%)**\n\n## Key Achievements\n\u2705 Comprehensive test suite generated (24 tests)\n\u2705 High code coverage achieved (87.5%)\n\u2705 Well-defined user stories and scenarios\n\u2705 Automated test execution successful\n\n## Recommendations\n1. Fix timeout issue in large file upload tests\n2. Increase branch coverage to 90%+\n3. Add performance benchmarks\n4. Implement security testing\n\n## Deliverables\n- 8 comprehensive analysis reports\n- 24 automated Playwright tests  \n- Detailed coverage analysis\n- Actionable recommendations\n\nTODO: Compile actual analysis results into comprehensive report\n"
+  },
+  "errors": []
+}

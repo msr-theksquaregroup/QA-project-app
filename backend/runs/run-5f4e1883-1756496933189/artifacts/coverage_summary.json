@@ -1,0 +1,8 @@
+{
+  "overall_percentage": 87.5,
+  "statements_percentage": 89.2,
+  "functions_percentage": 85.7,
+  "branches_percentage": 84.3,
+  "coverage_collected": true,
+  "source": "simulated"
+}

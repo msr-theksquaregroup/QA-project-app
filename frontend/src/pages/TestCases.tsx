@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { CodePreview } from '@/components/CodePreview';
@@ -17,7 +18,8 @@ import {
 } from 'lucide-react';
 
 export default function TestCases() {
-  const { lastRunId, selectedPaths, useNotebook } = useAppStore();
+  const navigate = useNavigate();
+  const { lastRunId, selectedPaths, useNotebook, setLastRunId } = useAppStore();
   const [activeTab, setActiveTab] = useState<'generated' | 'custom'>('generated');
   const [customTests, setCustomTests] = useState('');
 
@@ -62,8 +64,9 @@ export default function TestCases() {
         description: `Run ${result.runId.substring(0, 8)}... has been queued with your custom test specifications.`,
       });
       
+      setLastRunId(result.runId);
+      navigate(`/runs/${result.runId}`);
       console.log('Started run with custom tests:', result.runId);
-      // In a real app, you'd navigate to the run detail page
     } catch (error: any) {
       toast.error('Failed to Start Analysis', {
         description: error.message || 'An unexpected error occurred. Please try again.',

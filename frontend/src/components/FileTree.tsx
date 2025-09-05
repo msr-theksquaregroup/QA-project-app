@@ -15,6 +15,8 @@ interface FileTreeProps {
   root: FileNode;
   selectedPaths: string[];
   onSelectionChange: (paths: string[]) => void;
+  onFileClick?: (path: string) => void;
+  selectedFile?: string;
   className?: string;
 }
 
@@ -25,6 +27,8 @@ interface FileTreeNodeProps {
   onToggle: (path: string) => void;
   expandedNodes: Set<string>;
   onExpandToggle: (path: string) => void;
+  onFileClick?: (path: string) => void;
+  selectedFile?: string;
 }
 
 type CheckState = 'unchecked' | 'checked' | 'indeterminate';
@@ -32,7 +36,9 @@ type CheckState = 'unchecked' | 'checked' | 'indeterminate';
 export function FileTree({ 
   root, 
   selectedPaths, 
-  onSelectionChange, 
+  onSelectionChange,
+  onFileClick,
+  selectedFile,
   className 
 }: FileTreeProps) {
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set([root.path]));
@@ -66,6 +72,8 @@ export function FileTree({
         onToggle={handleToggle}
         expandedNodes={expandedNodes}
         onExpandToggle={handleExpandToggle}
+        onFileClick={onFileClick}
+        selectedFile={selectedFile}
       />
     </div>
   );
@@ -78,6 +86,8 @@ function FileTreeNode({
   onToggle,
   expandedNodes,
   onExpandToggle,
+  onFileClick,
+  selectedFile,
 }: FileTreeNodeProps) {
   const isExpanded = expandedNodes.has(node.path);
   const hasChildren = node.children && node.children.length > 0;
@@ -104,10 +114,18 @@ function FileTreeNode({
   }, [selectedPaths]);
 
   const checkState = getCheckState(node);
+  const isSelectedForPreview = selectedFile === node.path;
 
   const handleNodeClick = () => {
     if (node.isDir && hasChildren) {
       onExpandToggle(node.path);
+    }
+  };
+
+  const handleFileClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!node.isDir && onFileClick) {
+      onFileClick(node.path);
     }
   };
 
@@ -151,7 +169,8 @@ function FileTreeNode({
       <div
         className={cn(
           'flex items-center space-x-2 rounded-md px-2 py-1 text-sm hover:bg-accent hover:text-accent-foreground cursor-pointer',
-          level > 0 && 'ml-4'
+          level > 0 && 'ml-4',
+          isSelectedForPreview && 'bg-blue-50 border border-blue-200'
         )}
         style={{ paddingLeft: `${level * 16 + 8}px` }}
       >
@@ -197,8 +216,12 @@ function FileTreeNode({
 
         {/* Name */}
         <span
-          onClick={handleNodeClick}
-          className="flex-1 truncate"
+          onClick={node.isDir ? handleNodeClick : handleFileClick}
+          className={cn(
+            "flex-1 truncate",
+            !node.isDir && "hover:text-blue-600 cursor-pointer",
+            isSelectedForPreview && "text-blue-700 font-medium"
+          )}
         >
           {node.name}
         </span>
@@ -216,6 +239,8 @@ function FileTreeNode({
               onToggle={onToggle}
               expandedNodes={expandedNodes}
               onExpandToggle={onExpandToggle}
+              onFileClick={onFileClick}
+              selectedFile={selectedFile}
             />
           ))}
         </div>

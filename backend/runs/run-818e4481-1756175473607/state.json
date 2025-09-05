@@ -1,0 +1,58 @@
+{
+  "runId": "run-818e4481-1756175473607",
+  "status": "running",
+  "agents": [
+    {
+      "key": "code_analysis",
+      "label": "Code Analysis",
+      "state": "idle",
+      "message": null
+    },
+    {
+      "key": "user_story",
+      "label": "User Story Generation",
+      "state": "idle",
+      "message": null
+    },
+    {
+      "key": "gherkin",
+      "label": "Gherkin Scenarios",
+      "state": "idle",
+      "message": null
+    },
+    {
+      "key": "test_plan",
+      "label": "Test Plan Creation",
+      "state": "idle",
+      "message": null
+    },
+    {
+      "key": "playwright",
+      "label": "Playwright Test Generation",
+      "state": "idle",
+      "message": null
+    },
+    {
+      "key": "execution",
+      "label": "Test Execution",
+      "state": "idle",
+      "message": null
+    },
+    {
+      "key": "coverage",
+      "label": "Coverage Analysis",
+      "state": "idle",
+      "message": null
+    },
+    {
+      "key": "final_report",
+      "label": "Final Report",
+      "state": "idle",
+      "message": null
+    }
+  ],
+  "coverage": null,
+  "files": [],
+  "artifacts": {},
+  "errors": []
+}

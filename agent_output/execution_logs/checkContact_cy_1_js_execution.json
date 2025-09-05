@@ -1,0 +1,9 @@
+{
+  "status": "warning",
+  "tests_run": 8,
+  "tests_passed": 7,
+  "tests_failed": 1,
+  "execution_time": "4.66s",
+  "execution_mode": "simulated_playwright",
+  "timestamp": "2025-09-05T02:32:34.591404"
+}

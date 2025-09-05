@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "filename": "login_test.js",
+    "normalized_filename": "login_test_js",
+    "generated_at": "2025-09-05T02:21:46.121259",
+    "framework_version": "3.0.0-FIXED-UNIVERSAL",
+    "processing_status": "completed",
+    "all_content_generated": true
+  },
+  "analysis_summary": {
+    "filename": "login_test.js",
+    "normalized_filename": "login_test_js",
+    "language_detected": "javascript",
+    "frameworks_detected": [
+      "cypress",
+      "jest"
+    ],
+    "real_urls": [
+      "https://example.com/login"
+    ],
+    "primary_url": "https://example.com/login",
+    "parsed_steps": [
+      {
+        "type": "navigation",
+        "action": "cy.visit",
+        "url": "https://example.com/login",
+        "line_number": 1,
+        "original_code": "describe(\"Login Test\", () => { it(\"should login successfully\", () => { cy.visit(\"https://example.com/login\"); cy.get(\"#username\").type(\"testuser\"); cy.get(\"#password\").type(\"password123\"); cy.get(\"#login-btn\").click(); cy.url().should(\"include\", \"/dashboard\"); }); });"
+      }
+    ],
+    "code_length": 268,
+    "lines_count": 1,
+    "complexity_score": 1,
+    "analysis_timestamp": "2025-09-05T02:21:40.610625",
+    "quality_metrics": {
+      "urls_found": 1,
+      "steps_parsed": 1,
+      "frameworks_detected": 2,
+      "has_real_urls": true,
+      "assertion_types": []
+    },
+    "agent_version": "3.0.0-FIXED",
+    "subfolder_origin": "test",
+    "parsing_engine": "enhanced_fixed_assertions"
+  },
+  "execution_summary": {
+    "status": "passed",
+    "tests_run": 1,
+    "tests_passed": 1,
+    "tests_failed": 0,
+    "execution_time": "6.35s",
+    "execution_mode": "simulated_playwright",
+    "timestamp": "2025-09-05T02:21:45.116877"
+  },
+  "coverage_summary": {
+    "statements_percentage": 70.5,
+    "branches_percentage": 66.2,
+    "functions_percentage": 73.2,
+    "lines_percentage": 76.2,
+    "overall_percentage": 71.5,
+    "coverage_collected": true,
+    "source": "simulated_c8_coverage",
+    "timestamp": "2025-09-05T02:21:45.616534"
+  },
+  "artifacts_generated": {
+    "gherkin": "login_test_js.feature",
+    "test_plan": "login_test_js_test_plan.md",
+    "user_story": "login_test_js_user_story.md",
+    "playwright_test": "login_test_js_generated.spec.js",
+    "execution_log": "login_test_js_execution.json"
+  },
+  "errors": []
+}

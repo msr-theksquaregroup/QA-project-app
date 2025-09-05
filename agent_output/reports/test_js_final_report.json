@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "filename": "test.js",
+    "normalized_filename": "test_js",
+    "generated_at": "2025-09-05T02:11:05.797967",
+    "framework_version": "3.0.0-FIXED-UNIVERSAL",
+    "processing_status": "completed",
+    "all_content_generated": true
+  },
+  "analysis_summary": {
+    "filename": "test.js",
+    "normalized_filename": "test_js",
+    "language_detected": "javascript",
+    "frameworks_detected": [
+      "cypress",
+      "jest"
+    ],
+    "real_urls": [
+      "https://example.com"
+    ],
+    "primary_url": "https://example.com",
+    "parsed_steps": [
+      {
+        "type": "navigation",
+        "action": "cy.visit",
+        "url": "https://example.com",
+        "line_number": 1,
+        "original_code": "cy.visit(\"https://example.com\"); cy.get(\"h1\").should(\"be.visible\"); cy.get(\"a\").click();"
+      }
+    ],
+    "code_length": 88,
+    "lines_count": 1,
+    "complexity_score": 1,
+    "analysis_timestamp": "2025-09-05T02:11:00.281987",
+    "quality_metrics": {
+      "urls_found": 1,
+      "steps_parsed": 1,
+      "frameworks_detected": 2,
+      "has_real_urls": true,
+      "assertion_types": []
+    },
+    "agent_version": "3.0.0-FIXED",
+    "subfolder_origin": "demo",
+    "parsing_engine": "enhanced_fixed_assertions"
+  },
+  "execution_summary": {
+    "status": "passed",
+    "tests_run": 1,
+    "tests_passed": 1,
+    "tests_failed": 0,
+    "execution_time": "3.02s",
+    "execution_mode": "simulated_playwright",
+    "timestamp": "2025-09-05T02:11:04.790109"
+  },
+  "coverage_summary": {
+    "statements_percentage": 72.6,
+    "branches_percentage": 74.3,
+    "functions_percentage": 71.2,
+    "lines_percentage": 70.7,
+    "overall_percentage": 72.2,
+    "coverage_collected": true,
+    "source": "simulated_c8_coverage",
+    "timestamp": "2025-09-05T02:11:05.292348"
+  },
+  "artifacts_generated": {
+    "gherkin": "test_js.feature",
+    "test_plan": "test_js_test_plan.md",
+    "user_story": "test_js_user_story.md",
+    "playwright_test": "test_js_generated.spec.js",
+    "execution_log": "test_js_execution.json"
+  },
+  "errors": []
+}
