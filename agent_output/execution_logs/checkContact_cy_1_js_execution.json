@@ -1,9 +1,9 @@
 {
-  "status": "warning",
+  "status": "passed",
   "tests_run": 8,
-  "tests_passed": 7,
-  "tests_failed": 1,
-  "execution_time": "4.66s",
+  "tests_passed": 8,
+  "tests_failed": 0,
+  "execution_time": "4.17s",
   "execution_mode": "simulated_playwright",
-  "timestamp": "2025-09-05T02:32:34.591404"
+  "timestamp": "2025-09-08T00:43:42.840437"
 }

@@ -1,0 +1,31 @@
+# QA Project Application - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core FastAPI Dependencies
+fastapi==0.110.0
+uvicorn[standard]==0.27.1
+pydantic==2.6.1
+python-multipart==0.0.9
+aiofiles==23.2.1
+requests==2.31.0
+python-dotenv==1.0.1
+
+# Jupyter Notebook Support
+nbformat==5.10.4
+nbclient==0.10.0
+ipykernel==6.29.5
+
+# AI/ML Dependencies (Optional - for advanced features)
+# Uncomment if using AI agents with Groq/LangChain
+# langchain>=0.3.27
+# langgraph>=0.6.6
+# langchain-core>=0.3.75
+# groq>=0.4.0
+
+# Development Dependencies
+# pytest>=7.0.0
+# black>=22.0.0
+# flake8>=4.0.0
+
+# Note: Backend-specific dependencies are in backend/requirements.txt
+# This file is for convenience and overview

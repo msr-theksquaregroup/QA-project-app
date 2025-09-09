@@ -2,7 +2,7 @@
   "metadata": {
     "filename": "checkContact.cy 1.js",
     "normalized_filename": "checkContact_cy_1_js",
-    "generated_at": "2025-09-05T02:32:35.595777",
+    "generated_at": "2025-09-08T00:43:43.847426",
     "framework_version": "3.0.0-FIXED-UNIVERSAL",
     "processing_status": "completed",
     "all_content_generated": true
@@ -91,15 +91,15 @@
     "code_length": 469,
     "lines_count": 8,
     "complexity_score": 18,
-    "analysis_timestamp": "2025-09-05T02:32:30.086805",
+    "analysis_timestamp": "2025-09-08T00:43:38.331678",
     "quality_metrics": {
       "urls_found": 1,
       "steps_parsed": 8,
       "frameworks_detected": 2,
       "has_real_urls": true,
       "assertion_types": [
-        "assert_url",
-        "assert_value"
+        "assert_value",
+        "assert_url"
       ]
     },
     "agent_version": "3.0.0-FIXED",
@@ -107,23 +107,23 @@
     "parsing_engine": "enhanced_fixed_assertions"
   },
   "execution_summary": {
-    "status": "warning",
+    "status": "passed",
     "tests_run": 8,
-    "tests_passed": 7,
-    "tests_failed": 1,
-    "execution_time": "4.66s",
+    "tests_passed": 8,
+    "tests_failed": 0,
+    "execution_time": "4.17s",
     "execution_mode": "simulated_playwright",
-    "timestamp": "2025-09-05T02:32:34.591404"
+    "timestamp": "2025-09-08T00:43:42.840437"
   },
   "coverage_summary": {
     "statements_percentage": 95,
     "branches_percentage": 90,
-    "functions_percentage": 96.8,
-    "lines_percentage": 91.1,
-    "overall_percentage": 93.2,
+    "functions_percentage": 100,
+    "lines_percentage": 89.6,
+    "overall_percentage": 93.6,
     "coverage_collected": true,
     "source": "simulated_c8_coverage",
-    "timestamp": "2025-09-05T02:32:35.092679"
+    "timestamp": "2025-09-08T00:43:43.342891"
   },
   "artifacts_generated": {
     "gherkin": "checkContact_cy_1_js.feature",
